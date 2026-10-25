@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * self-test.mjs - فحوصات محلية بسيطة
+ * self-test.mjs - فحوصات محلية شاملة
  */
 
 import fs from "node:fs";
@@ -10,6 +10,7 @@ function test() {
   const required = [
     "README.md",
     "README.ar.md",
+    "README.en.md",
     "docs/CONFIRMED.md",
     "docs/MARKETCAP_IN_PI.md",
     "docs/OUSD.md",
@@ -17,9 +18,14 @@ function test() {
     "docs/TOKENS_NFTS_AI.md",
     "docs/SPECULATION.md",
     "docs/SOURCES.md",
+    "docs/LIQUIDITY.md",
+    "docs/FIRST_MINUTES.md",
+    "docs/CASE_CIDI.md",
     "DISCLAIMER.md",
     "SECURITY.md",
-    "LICENSE"
+    "LICENSE",
+    "index.html",
+    "llms.txt",
   ];
 
   let ok = 0;

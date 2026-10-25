@@ -1,47 +1,95 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pi-ecosystem-mcap | مؤكد مقابل تخمين</title>
-<meta name="description" content="تحليل مستقل حول قياس ماركت كاب الإيكوسستم بالـPi، PiDEX، OUSD، AI Tokens، NFTs – فصل واضح بين المؤكد والتخمين">
+<meta name="description" content="تحليل مستقل حول قياس ماركت كاب الإيكوسستم بالـPi، PiDEX، OUSD، AI Tokens، NFTs، CiDi Games – فصل واضح بين المؤكد والتخمين">
+<meta name="keywords" content="Pi Network, PiDEX, OUSD, CiDi Games, ELF, ecosystem, market cap, numeraire, stablecoin, AI tokens, NFT">
+<meta property="og:title" content="pi-ecosystem-mcap | مؤكد مقابل تخمين">
+<meta property="og:description" content="تحليل صادق ومستقل حول آليات إيكوسستم Pi — Pi كـnumeraire، PiDEX، OUSD، وCiDi Games كمثال حي.">
+<meta property="og:type" content="website">
 <style>
-:root{--bg:#0b0d10;--panel:#12161c;--line:#232a34;--fg:#e8edf4;--muted:#97a3b6;--accent:#f7c948}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#16202b 0%,var(--bg) 60%);color:var(--fg);font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:0 18px 70px}
+:root{--bg:#0b0d10;--panel:#12161c;--line:#232a34;--fg:#e8edf4;--muted:#97a3b6;--accent:#f7c948;--ok:#4ade80;--warn:#fbbf24;--no:#f87171;--blue:#9ecbff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#16202b 0%,var(--bg) 60%);color:var(--fg);font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:0 18px 70px}
 main{max-width:980px;margin:0 auto}
 header{padding:64px 0 28px}
+/* Lang toggle */
+.lang-toggle{display:flex;gap:8px;margin-bottom:24px}
+.lang-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--muted);cursor:pointer;font-size:13px;transition:all .2s}
+.lang-btn.active{border-color:var(--accent);color:var(--accent);background:#1a1500}
+/* Badges */
 .badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .badge{font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:#0f141a}
-.badge.warn{color:#fbbf24;border-color:#4a3a12}
+.badge.warn{color:var(--warn);border-color:#4a3a12}
+.badge.ok{color:var(--ok);border-color:#1a3a1a}
 h1{font-size:clamp(32px,6vw,54px);margin:0 0 14px;letter-spacing:-.02em}
 h1 .pi{color:var(--accent)}
 .lede{color:var(--muted);max-width:72ch;font-size:18px}
 h2{margin:48px 0 14px;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--muted)}
+/* Cards */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
-.card h3{margin:0 0 6px}
-.card p{margin:0;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;transition:border-color .2s}
+.card:hover{border-color:#3a4555}
+.card a{text-decoration:none;color:inherit;display:block;height:100%}
+.card h3{margin:0 0 6px;font-size:15px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card .tag{font-size:11px;color:var(--accent);margin-bottom:6px;display:block}
+/* Feature card */
+.card.featured{border-color:#2a3a1a;background:#0e1510}
+.card.featured .tag{color:var(--ok)}
+/* Table */
 table{width:100%;border-collapse:collapse}
-th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right}
-th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;font-size:14px}
+th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
 td:first-child{text-align:right}
-.ok{color:#4ade80}.warn{color:#fbbf24}.no{color:#f87171}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.no{color:var(--no)}
+/* Links */
 .links{display:flex;flex-wrap:wrap;gap:10px}
-.links a{border:1px solid var(--line);background:#0f141a;padding:9px 13px;border-radius:10px;text-decoration:none;color:#9ecbff}
-footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+.links a{border:1px solid var(--line);background:#0f141a;padding:9px 13px;border-radius:10px;text-decoration:none;color:var(--blue);font-size:14px;transition:border-color .2s}
+.links a:hover{border-color:#3a4555}
+/* Stats bar */
+.stats{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0 0;padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .num{font-size:24px;font-weight:700;color:var(--fg)}
+.stat .label{font-size:12px;color:var(--muted)}
+/* Footer */
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+/* LTR content */
+[dir="ltr"]{text-align:left}
+.en-content{display:none}
+.ar-content{display:block}
+body.en .en-content{display:block}
+body.en .ar-content{display:none}
+body.en{direction:ltr}
 </style>
 </head>
 <body>
 <main>
+<div class="lang-toggle">
+  <button class="lang-btn active" onclick="setLang('ar')" id="btn-ar">العربية</button>
+  <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
+</div>
+
+<!-- ARABIC CONTENT -->
+<div class="ar-content">
 <header>
   <div class="badges">
     <span class="badge warn">مستقل غير رسمي</span>
     <span class="badge">ماشي نصائح مالية</span>
     <span class="badge">قراءة فقط</span>
     <span class="badge">فصل مؤكد / تخمين</span>
+    <span class="badge ok">CiDi Games — مثال حي</span>
   </div>
   <h1><span class="pi">π</span> ecosystem-mcap</h1>
-  <p class="lede">تحليل صادق حول فكرة قياس ماركت كاب الإيكوسستم بالـPi عند التفعيل، ودور <strong>PiDEX</strong> و<strong>OUSD</strong> و<strong>AI Tokens</strong> و<strong>NFTs</strong>. الغرض فهم الآلية، ماشي التنبؤ بالسعر.</p>
+  <p class="lede">تحليل صادق حول فكرة قياس ماركت كاب الإيكوسستم بالـPi عند التفعيل، ودور <strong>PiDEX</strong> و<strong>OUSD</strong> و<strong>AI Tokens</strong> و<strong>NFTs</strong>. مع دراسة حالة حية: <strong>CiDi Games / ELF</strong>.</p>
+  <div class="stats">
+    <div class="stat"><span class="num ok">5</span><span class="label">نقاط مؤكدة رسمياً</span></div>
+    <div class="stat"><span class="num warn">4</span><span class="label">منطقية لكن غير مؤكدة</span></div>
+    <div class="stat"><span class="num no">6+</span><span class="label">تخمين صريح</span></div>
+    <div class="stat"><span class="num" style="color:var(--blue)">1</span><span class="label">دراسة حالة حية</span></div>
+  </div>
 </header>
 
 <h2>مؤكد مقابل غير مؤكد</h2>
@@ -53,39 +101,98 @@ footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:v
 <tr><td>شراكة Pi مع Open Standard / OUSD</td><td class="ok">مؤكد</td><td>تغريدة PiCoreTeam سبتمبر 30 2026</td></tr>
 <tr><td>OUSD مكمّل للـPi ماشي بديل</td><td class="ok">مؤكد</td><td>"Pi should remain the primary crypto..."</td></tr>
 <tr><td>استكشاف مكافآت للـPioneers</td><td class="ok">مؤكد</td><td>مذكور صراحة</td></tr>
+<tr><td>CiDi Games — استثمار Pi Network Ventures</td><td class="ok">مؤكد</td><td>minepi.com — مثال اقتصادي حي</td></tr>
 <tr><td>كل أصل يتحول لPi ديراكت كقاعدة إلزامية</td><td class="no">غير مؤكد</td><td>ما لقيناهوش حرفياً</td></tr>
 <tr><td>توقيت PiDEX بالضبط</td><td class="no">غير مؤكد</td><td>قيد التحضير/اختبار</td></tr>
-<tr><td>ماركت كاب يقاس بالـPi كـnumeraire</td><td class="warn">منطقي لكن غير مؤكد رسميًا</td><td>سلوك محتمل أكثر من إعلان رسمي</td></tr>
+<tr><td>ماركت كاب يقاس بالـPi كـnumeraire</td><td class="warn">منطقي لكن غير مؤكد رسمياً</td><td>سلوك محتمل أكثر من إعلان رسمي</td></tr>
 </tbody>
 </table>
 </div>
 
 <h2>أقسام الريبو</h2>
 <div class="cards">
-  <div class="card"><h3>مؤكد / غير مؤكد</h3><p>جدول واضح مع مصادر لكل شي</p></div>
-  <div class="card"><h3>ماركت كاب بالـPi</h3><p>مفهوم وحدة الحساب ولماذا كيخدم</p></div>
-  <div class="card"><h3>OUSD وتجميد القيمة</h3><p>فرق بين تسوية مستقرة ومنافسة للـPi</p></div>
-  <div class="card"><h3>PiDEX + السرعة</h3><p>دفتر الأوامر، السيولة، ومتابعة أصل ما بعتو</p></div>
-  <div class="card"><h3>AI Tokens / NFTs</h3><p>سلوك أول لحظات ولماذا Pi غالبًا المرجع الأول</p></div>
-  <div class="card"><h3>تخمين مقابل واقع</h3><p>فصل صارم باش نبقاو صادقين</p></div>
+  <div class="card"><a href="docs/CONFIRMED.md"><span class="tag">الأساس</span><h3>مؤكد / غير مؤكد</h3><p>جدول واضح مع مصادر لكل شي</p></a></div>
+  <div class="card"><a href="docs/MARKETCAP_IN_PI.md"><span class="tag">المفهوم</span><h3>ماركت كاب بالـPi</h3><p>مفهوم وحدة الحساب ولماذا كيخدم</p></a></div>
+  <div class="card"><a href="docs/OUSD.md"><span class="tag">الاستقرار</span><h3>OUSD وتجميد القيمة</h3><p>فرق بين تسوية مستقرة ومنافسة للـPi</p></a></div>
+  <div class="card"><a href="docs/PIDEX.md"><span class="tag">التداول</span><h3>PiDEX + السرعة</h3><p>دفتر الأوامر، السيولة، ومتابعة أصل ما بعتو</p></a></div>
+  <div class="card"><a href="docs/LIQUIDITY.md"><span class="tag">جديد</span><h3>السيولة — AMM vs Order Book</h3><p>Spread، Depth، Slippage — شرح مبسط</p></a></div>
+  <div class="card"><a href="docs/FIRST_MINUTES.md"><span class="tag">جديد</span><h3>أول 60 ثانية</h3><p>ما يصير فعلياً فأول لحظات إطلاق أصل</p></a></div>
+  <div class="card featured"><a href="docs/CASE_CIDI.md"><span class="tag">دراسة حالة حية ✦</span><h3>CiDi Games / ELF</h3><p>CiDiCoin، Elf Sigil، CiDiScore — مثال فعلي من داخل الإيكوسستم</p></a></div>
+  <div class="card"><a href="docs/TOKENS_NFTS_AI.md"><span class="tag">الأصول</span><h3>AI Tokens / NFTs</h3><p>سلوك أول لحظات ولماذا Pi غالبًا المرجع الأول</p></a></div>
+  <div class="card"><a href="docs/SPECULATION.md"><span class="tag">الحدود</span><h3>تخمين مقابل واقع</h3><p>فصل صارم باش نبقاو صادقين</p></a></div>
+</div>
 </div>
 
-<h2>روابط</h2>
+<!-- ENGLISH CONTENT -->
+<div class="en-content" dir="ltr">
+<header>
+  <div class="badges">
+    <span class="badge warn">Independent / Unofficial</span>
+    <span class="badge">No financial advice</span>
+    <span class="badge">Read-only</span>
+    <span class="badge ok">CiDi Games — Live Case Study</span>
+  </div>
+  <h1><span class="pi">π</span> ecosystem-mcap</h1>
+  <p class="lede">Honest analysis of Pi ecosystem market-cap mechanics at activation — PiDEX, OUSD, AI Tokens, NFTs. With a live case study: <strong>CiDi Games / ELF</strong>. About understanding mechanisms, not predicting prices.</p>
+</header>
+
+<h2>Confirmed vs Unconfirmed</h2>
+<div class="card" dir="ltr">
+<table>
+<thead><tr><th style="text-align:left">Point</th><th>Status</th><th style="text-align:left">Note</th></tr></thead>
+<tbody>
+<tr><td>Pi is primary currency of ecosystem</td><td class="ok">Confirmed</td><td>Official Pi Blog, Oct 8 2026</td></tr>
+<tr><td>Pi partnership with Open Standard / OUSD</td><td class="ok">Confirmed</td><td>PiCoreTeam tweet, Sep 30 2026</td></tr>
+<tr><td>OUSD is complementary, not a replacement</td><td class="ok">Confirmed</td><td>"Pi should remain the primary crypto..."</td></tr>
+<tr><td>Exploring Pioneer rewards</td><td class="ok">Confirmed</td><td>Stated explicitly</td></tr>
+<tr><td>CiDi Games — Pi Network Ventures investee</td><td class="ok">Confirmed</td><td>minepi.com — live economic example</td></tr>
+<tr><td>"All assets convert to Pi directly" as mandatory</td><td class="no">Unconfirmed</td><td>Not found in official sources</td></tr>
+<tr><td>Exact PiDEX launch timing</td><td class="no">Unconfirmed</td><td>In testing/preparation</td></tr>
+<tr><td>Ecosystem market-cap measured in Pi as numeraire</td><td class="warn">Logical, not officially stated</td><td>Expected market behavior, not a rule</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Repository Sections</h2>
+<div class="cards" dir="ltr">
+  <div class="card"><a href="docs/CONFIRMED.md"><span class="tag">Foundation</span><h3>Confirmed / Unconfirmed</h3><p>Table with official sources for each claim</p></a></div>
+  <div class="card"><a href="docs/MARKETCAP_IN_PI.md"><span class="tag">Concept</span><h3>Ecosystem MCAP in Pi</h3><p>The numeraire concept and why it makes sense</p></a></div>
+  <div class="card"><a href="docs/OUSD.md"><span class="tag">Stability</span><h3>OUSD & Value Freezing</h3><p>Complementary stablecoin role vs replacement</p></a></div>
+  <div class="card"><a href="docs/PIDEX.md"><span class="tag">Trading</span><h3>PiDEX + Speed</h3><p>Order book, liquidity, and tracking your sold asset</p></a></div>
+  <div class="card"><a href="docs/LIQUIDITY.md"><span class="tag">New</span><h3>Liquidity — AMM vs Order Book</h3><p>Spread, Depth, Slippage — explained simply</p></a></div>
+  <div class="card"><a href="docs/FIRST_MINUTES.md"><span class="tag">New</span><h3>First 60 Seconds</h3><p>What actually happens when a new asset hits PiDEX</p></a></div>
+  <div class="card featured"><a href="docs/CASE_CIDI.md"><span class="tag">Live Case Study ✦</span><h3>CiDi Games / ELF</h3><p>CiDiCoin, Elf Sigil, CiDiScore — real ecosystem economics in action</p></a></div>
+  <div class="card"><a href="docs/TOKENS_NFTS_AI.md"><span class="tag">Assets</span><h3>AI Tokens / NFTs</h3><p>Why Pi is typically the first stop in new asset trading</p></a></div>
+  <div class="card"><a href="docs/SPECULATION.md"><span class="tag">Boundaries</span><h3>Fact vs Speculation</h3><p>Clear separation to stay honest</p></a></div>
+</div>
+</div>
+
+<h2>روابط / Links</h2>
 <div class="links">
   <a href="https://github.com/aybvip/pi-ecosystem-mcap">GitHub Repo</a>
   <a href="README.md">README (عربي)</a>
+  <a href="README.en.md">README (English)</a>
   <a href="docs/CONFIRMED.md">مؤكد / غير مؤكد</a>
-  <a href="docs/MARKETCAP_IN_PI.md">ماركت كاب بالـPi</a>
-  <a href="docs/OUSD.md">OUSD</a>
-  <a href="docs/PIDEX.md">PiDEX</a>
-  <a href="docs/TOKENS_NFTS_AI.md">AI / NFTs</a>
-  <a href="docs/SPECULATION.md">تخمين مقابل واقع</a>
+  <a href="docs/CASE_CIDI.md">CiDi Games Case Study</a>
+  <a href="docs/LIQUIDITY.md">السيولة</a>
+  <a href="docs/FIRST_MINUTES.md">أول 60 ثانية</a>
   <a href="docs/SOURCES.md">المصادر</a>
 </div>
 
 <footer>
-مستقل وغير رسمي • ماشي نصائح مالية • قراءة فقط • MIT License
+  <span>مستقل وغير رسمي • ماشي نصائح مالية • قراءة فقط • MIT License</span>
+  <span><a href="DISCLAIMER.md" style="color:var(--muted);text-decoration:none">DISCLAIMER</a> · <a href="SECURITY.md" style="color:var(--muted);text-decoration:none">SECURITY</a></span>
 </footer>
 </main>
+
+<script>
+function setLang(lang) {
+  document.body.classList.toggle('en', lang === 'en');
+  document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.documentElement.lang = lang === 'en' ? 'en' : 'ar';
+  document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
+}
+</script>
 </body>
 </html>

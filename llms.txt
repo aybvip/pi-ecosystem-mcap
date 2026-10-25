@@ -1,12 +1,31 @@
 # pi-ecosystem-mcap
 
-> Independent analysis of Pi ecosystem market-cap framing at activation: confirmed vs speculation.
+> Independent analysis of Pi ecosystem market-cap mechanics at activation — confirmed facts vs speculation.
 
-Machine index: [llms.txt](llms.txt)
+Live site: https://aybvip.github.io/pi-ecosystem-mcap/
+GitHub: https://github.com/aybvip/pi-ecosystem-mcap
 
 ## Quick rule
-- Confirmed only if stated in official Pi/partner sources.
-- Else → speculation.
-- Pi is stated as primary; OUSD is complementary.
-- "All converts to Pi" is not found as an official rule.
-- No financial advice. Read-only.
+- A claim is CONFIRMED only if stated in an official Pi Network or partner source.
+- Otherwise → it is SPECULATION.
+
+## Key confirmed facts
+- Pi is stated as the primary cryptocurrency across the network's processes.
+- OUSD (Open Standard) is a confirmed partner, playing a complementary role — not a replacement for Pi.
+- CiDi Games is an official Pi Network Ventures investee with a live in-ecosystem economy (CiDiCoin, Elf Sigil, CiDiScore).
+- "All assets convert directly to Pi" is NOT found as a mandatory official rule.
+
+## Documents index
+- docs/CONFIRMED.md — confirmed vs unconfirmed table with sources
+- docs/MARKETCAP_IN_PI.md — the numeraire concept: why "measured in Pi" makes sense
+- docs/OUSD.md — OUSD role, value freezing, complementary vs replacement
+- docs/PIDEX.md — order book, liquidity, speed, tracking sold assets
+- docs/LIQUIDITY.md — AMM vs Order Book, Spread, Depth, Slippage explained simply
+- docs/FIRST_MINUTES.md — what happens in the first 60 seconds when a new asset hits PiDEX
+- docs/CASE_CIDI.md — live case study: CiDi Games / ELF (CiDiCoin, Elf Sigil, CiDiScore)
+- docs/TOKENS_NFTS_AI.md — AI tokens and NFT behavior — why Pi is typically the first destination
+- docs/SPECULATION.md — clear separation between fact and speculation
+- docs/SOURCES.md — all official sources with links
+
+## No financial advice
+Read-only. Independent. Not affiliated with Pi Network or Pi Core Team.

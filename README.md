@@ -7,7 +7,7 @@
 [![No financial advice](https://img.shields.io/badge/No%20financial%20advice-red)](DISCLAIMER.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[العربية](README.ar.md) · [الإنجليزي](README.en.md) · [الموقع](https://aybvip.github.io/pi-ecosystem-mcap/) · [machine index](llms.txt)
+[العربية](README.ar.md) · [English](README.en.md) · [الموقع](https://aybvip.github.io/pi-ecosystem-mcap/) · [machine index](llms.txt)
 
 ## الغرض
 
@@ -32,6 +32,7 @@
 | استكشاف مكافآت للـPioneers واستعمال أوسع لـOUSD | **مؤكد** | مذكور في البلوق الرسمي |
 | فكرة "كل أصل يتحول لPi مباشرةً في اللحظات الأولى كـقاعدة إلزامية" | **غير مؤكد** | ما كايناش صيغة رسمية هكذا لحد الآن |
 | "ماركت كاب الإيكوسستم يقاس بالـPi" كفكرة عامة | **قابلة للنقاش / شائعة** | منطقية جداً لكن مازال **ماشي إعلان رسمي بنسق "ديراكت دائماً"** |
+| CiDi Games — استثمار رسمي من Pi Network Ventures | **مؤكد** | [minepi.com](https://minepi.com) — مثال حي لاقتصاد الإيكوسستم |
 | PiDEX حي ومفتوح للجميع الآن | **غير مؤكد بالكامل** | كيقولون عليه اختبار/تحضير، حتى إعلان رسمي واضح يحدد التوقيت الدقيق |
 
 ## ابدأ من هنا
@@ -43,6 +44,9 @@
 | [`docs/OUSD.md`](docs/OUSD.md) | دور OUSD، التجميد بالقيمة، الفرق بين "وسيلة تسوية مستقرة" و"بديل" |
 | [`docs/PIDEX.md`](docs/PIDEX.md) | دفتر الأوامر، السيولة، السرعة، أهمية متابعـة أصل ما بعت |
 | [`docs/TOKENS_NFTS_AI.md`](docs/TOKENS_NFTS_AI.md) | سلوك AI tokens وNFTs، ولماذا يسبق Pi غالباً |
+| [`docs/LIQUIDITY.md`](docs/LIQUIDITY.md) | AMM، دفتر الأوامر، Spread، Depth — شرح مبسط |
+| [`docs/FIRST_MINUTES.md`](docs/FIRST_MINUTES.md) | ما يصير فعلياً فأول 60 ثانية عند إطلاق أصل |
+| [`docs/CASE_CIDI.md`](docs/CASE_CIDI.md) | **دراسة حالة حية: CiDi Games / ELF** — مثال فعلي داخل الإيكوسستم |
 | [`docs/SPECULATION.md`](docs/SPECULATION.md) | **فصل واضح** بين الواقعي والتخمين |
 | [`docs/SOURCES.md`](docs/SOURCES.md) | كل المصادر الرسمية مع الروابط |
 

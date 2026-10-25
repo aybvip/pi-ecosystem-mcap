@@ -1,3 +1,7 @@
+﻿---
+layout: default
+title: "الأمان والسياسة"
+---
 # SECURITY
 
 ## نطاق الأمان

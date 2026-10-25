@@ -1,0 +1,21 @@
+{
+  "name": "pi-ecosystem-mcap",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "تحليل مستقل حول ماركت كاب الإيكوسستم بالـPi، PiDEX، OUSD، AI tokens وNFTs - فصل بين مؤكد وتخمين",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node examples/self-test.mjs",
+    "check": "node examples/self-test.mjs"
+  },
+  "keywords": ["pi-network", "pinet", "pifoundation", "pidex", "ousd", "ecosystem", "mcap", "stablecoin", "ai-tokens", "nft"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aybvip/pi-ecosystem-mcap.git"
+  },
+  "author": "aybvip"
+}

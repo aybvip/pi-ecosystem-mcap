@@ -1,0 +1,12 @@
+# pi-ecosystem-mcap
+
+> Independent analysis of Pi ecosystem market-cap framing at activation: confirmed vs speculation.
+
+Machine index: [llms.txt](llms.txt)
+
+## Quick rule
+- Confirmed only if stated in official Pi/partner sources.
+- Else → speculation.
+- Pi is stated as primary; OUSD is complementary.
+- "All converts to Pi" is not found as an official rule.
+- No financial advice. Read-only.

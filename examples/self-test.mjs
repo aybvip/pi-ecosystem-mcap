@@ -23,6 +23,7 @@ function test() {
     "docs/CASE_CIDI.md",
     "docs/LAUNCHPAD_PIRC.md",
     "docs/ECOSYSTEM_COMPARE.md",
+    "viz.html",
     "DISCLAIMER.md",
     "SECURITY.md",
     "LICENSE",

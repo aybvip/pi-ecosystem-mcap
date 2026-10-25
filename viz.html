@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>π Ecosystem Flow — تدفق الإيكوسستم</title>
+<meta name="description" content="تصور بصري تفاعلي لتدفق اقتصاد إيكوسستم Pi — Pi، OUSD، CiDi Games، PiDEX، PiRC">
+<style>
+/* ===== RESET & ROOT ===== */
+:root {
+  --bg: #070a0f;
+  --surface: #0d1117;
+  --panel: #111820;
+  --border: #1e2733;
+  --border2: #2a3847;
+  --fg: #e2eaf4;
+  --muted: #6b7f94;
+  --pi: #f7c948;
+  --pi-dim: #3d3010;
+  --ousd: #4ade80;
+  --ousd-dim: #0d2e18;
+  --cidi: #a78bfa;
+  --cidi-dim: #1e1035;
+  --pidex: #38bdf8;
+  --pidex-dim: #0c2433;
+  --piBurn: #f87171;
+  --glow-pi: 0 0 20px rgba(247,201,72,.4);
+  --glow-ousd: 0 0 20px rgba(74,222,128,.4);
+  --glow-cidi: 0 0 20px rgba(167,139,250,.4);
+  --glow-dex: 0 0 20px rgba(56,189,248,.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+html, body { background: var(--bg); color: var(--fg); font-family: system-ui,-apple-system,Segoe UI,Roboto,sans-serif; overflow-x: hidden }
+body { min-height: 100vh }
+
+/* ===== NAV ===== */
+nav {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 12px 24px; background: var(--surface);
+  border-bottom: 1px solid var(--border); font-size: 13px;
+}
+nav a { color: var(--muted); text-decoration: none; transition: color .2s }
+nav a:hover { color: var(--fg) }
+nav a.home { color: var(--pi); font-weight: 700; font-size: 15px }
+nav span { color: var(--border2) }
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center; padding: 48px 24px 24px;
+  background: radial-gradient(ellipse 800px 400px at 50% 0%, #0f1e10 0%, var(--bg) 70%);
+}
+.hero h1 { font-size: clamp(22px,4vw,40px); letter-spacing: -.02em; margin-bottom: 8px }
+.hero h1 .pi { color: var(--pi) }
+.hero p { color: var(--muted); font-size: 15px; max-width: 60ch; margin: 0 auto }
+
+/* ===== TABS ===== */
+.tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 20px 24px 0 }
+.tab {
+  padding: 8px 18px; border-radius: 999px; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+  transition: all .2s;
+}
+.tab:hover { border-color: var(--border2); color: var(--fg) }
+.tab.active { background: var(--pi-dim); border-color: var(--pi); color: var(--pi); font-weight: 600 }
+
+/* ===== CANVAS SECTION ===== */
+.viz-wrap {
+  position: relative; max-width: 1000px; margin: 24px auto 0; padding: 0 16px;
+}
+canvas#flow { width: 100%; border-radius: 16px; border: 1px solid var(--border); display: block }
+
+/* ===== TOOLTIP ===== */
+#tooltip {
+  position: fixed; background: var(--panel); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 12px 16px; font-size: 13px; pointer-events: none;
+  max-width: 260px; line-height: 1.6; z-index: 100; opacity: 0; transition: opacity .15s;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6);
+}
+#tooltip .ttl { font-weight: 700; margin-bottom: 4px; font-size: 14px }
+#tooltip .ttb { color: var(--muted); font-size: 12px }
+
+/* ===== LIVE DATA ===== */
+.live-section { max-width: 1000px; margin: 32px auto; padding: 0 16px }
+.live-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px }
+.live-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px; transition: border-color .2s;
+}
+.live-card:hover { border-color: var(--border2) }
+.live-card .lc-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px }
+.live-card .lc-val { font-size: 24px; font-weight: 700; color: var(--fg) }
+.live-card .lc-sub { font-size: 12px; color: var(--muted); margin-top: 4px }
+.live-card.pi { border-color: var(--pi-dim) } .live-card.pi .lc-val { color: var(--pi) }
+.live-card.ousd { border-color: var(--ousd-dim) } .live-card.ousd .lc-val { color: var(--ousd) }
+.live-card.cidi { border-color: var(--cidi-dim) } .live-card.cidi .lc-val { color: var(--cidi) }
+.live-card.dex { border-color: var(--pidex-dim) } .live-card.dex .lc-val { color: var(--pidex) }
+.pulse { animation: pulse 2s infinite }
+@keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.5 } }
+
+/* ===== FLOW LEGEND ===== */
+.legend { max-width: 1000px; margin: 0 auto; padding: 16px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center }
+.leg-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted) }
+.leg-dot { width: 10px; height: 10px; border-radius: 50% }
+
+/* ===== MYTH BUSTER ===== */
+.myth-section { max-width: 700px; margin: 32px auto; padding: 0 16px 48px }
+.myth-section h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 16px; text-align: center }
+.myth-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  margin-bottom: 10px; overflow: hidden; cursor: pointer;
+}
+.myth-q { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; font-size: 14px }
+.myth-q .arrow { color: var(--muted); font-size: 12px; transition: transform .2s }
+.myth-card.open .arrow { transform: rotate(180deg) }
+.myth-a {
+  max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s;
+  padding: 0 18px; font-size: 13px; color: var(--muted); line-height: 1.7;
+}
+.myth-card.open .myth-a { max-height: 200px; padding: 0 18px 14px }
+.status-ok { color: var(--ousd); font-weight: 600 }
+.status-warn { color: var(--pi); font-weight: 600 }
+.status-no { color: var(--piBurn); font-weight: 600 }
+
+/* ===== FOOTER ===== */
+footer {
+  max-width: 1000px; margin: 0 auto; padding: 16px;
+  border-top: 1px solid var(--border); color: var(--muted); font-size: 12px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px
+}
+footer a { color: var(--muted); text-decoration: none }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/pi-ecosystem-mcap/" class="home">π ecosystem-mcap</a>
+  <span>›</span>
+  <span style="color:var(--pi)">Ecosystem Flow Viz</span>
+  <span style="margin-right:auto"></span>
+  <a href="/pi-ecosystem-mcap/docs/LAUNCHPAD_PIRC">PiRC</a>
+  <a href="/pi-ecosystem-mcap/docs/CASE_CIDI">CiDi</a>
+  <a href="/pi-ecosystem-mcap/docs/LIQUIDITY">السيولة</a>
+  <a href="/pi-ecosystem-mcap/docs/ECOSYSTEM_COMPARE">مقارنة</a>
+</nav>
+
+<div class="hero">
+  <h1><span class="pi">π</span> Ecosystem Flow</h1>
+  <p>تصور بصري تفاعلي لكيفاش كتتدفق القيمة داخل إيكوسستم Pi — اضغط على أي عقدة لتعرف أكثر</p>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="setView('economy')">تدفق الاقتصاد</div>
+  <div class="tab" onclick="setView('pirc')">مسار PiRC Launch</div>
+  <div class="tab" onclick="setView('firstmin')">أول 60 ثانية</div>
+</div>
+
+<div class="viz-wrap">
+  <canvas id="flow" height="480"></canvas>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:var(--pi)"></div>Pi</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--ousd)"></div>OUSD</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--cidi)"></div>CiDi / Elf</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--pidex)"></div>PiDEX</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#94a3b8"></div>Pioneer</div>
+</div>
+
+<!-- LIVE DATA -->
+<div class="live-section">
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-align:center;margin-bottom:12px">
+    Pi Mainnet — بيانات حية (قراءة فقط)
+  </div>
+  <div class="live-grid">
+    <div class="live-card pi">
+      <div class="lc-label">آخر Ledger</div>
+      <div class="lc-val pulse" id="lc-ledger">—</div>
+      <div class="lc-sub" id="lc-time">جاري التحميل...</div>
+    </div>
+    <div class="live-card dex">
+      <div class="lc-label">آخر Transactions</div>
+      <div class="lc-val" id="lc-txns">—</div>
+      <div class="lc-sub">من Pi Horizon API</div>
+    </div>
+    <div class="live-card ousd">
+      <div class="lc-label">OUSD</div>
+      <div class="lc-val">Complementary</div>
+      <div class="lc-sub">مكمل للـPi — مؤكد رسمياً</div>
+    </div>
+    <div class="live-card cidi">
+      <div class="lc-label">CiDi Games</div>
+      <div class="lc-val">Pi Ventures</div>
+      <div class="lc-sub">استثمار رسمي — Beta مايو 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- MYTH BUSTER -->
+<div class="myth-section">
+  <h2>اختبر معلوماتك — مؤكد أم تخمين؟</h2>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>"كل أصل في الإيكوسستم يتحول لPi مباشرةً — قاعدة إلزامية"</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-no">غير مؤكد.</span> هاد الجملة شائعة بزاف لكن ما وجدناهاش في أي بلوق أو تغريدة رسمية. اللي مؤكد هو أن Pi هو العملة الرئيسية — والسوق هو لي يحدد كيفاش يتدفق المال.
+    </div>
+  </div>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>OUSD هو منافس لـPi وممكن يحل محله</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-no">خطأ تماماً.</span> النص الرسمي صريح: <em>"Pi should remain the primary crypto... with stablecoins providing a complementary role."</em> OUSD للتسوية المستقرة فقط.
+    </div>
+  </div>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>PiRC يضمن أن أي Token مطلق عبره لن تطيح قيمته</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-warn">جزئياً صحيح — لكن مضلل.</span> PiRC يُبني سيولة أولية ويمنع Rug Pull التقليدي، لكن ما يضمنش الطلب الحقيقي. لو ما كانش مستخدمين، السعر يطيح حتى مع Pool.
+    </div>
+  </div>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>Pi هي الوجهة الأولى للتحويل عند إطلاق أصل جديد على PiDEX</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-warn">منطقي جداً — لكن ليس قانوناً.</span> السلوك المتوقع بناءً على العمق وكون Pi هو العملة الرئيسية. لكنه سلوك سوق محتمل، ليس قاعدة مبرمجة.
+    </div>
+  </div>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>CiDi Games هو استثمار رسمي من Pi Network</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-ok">مؤكد 100%.</span> CiDi Games هو Portfolio Company لـPi Network Ventures — الذراع الاستثماري الرسمي لـPi Network. مذكور صراحة على minepi.com.
+    </div>
+  </div>
+
+  <div class="myth-card" onclick="toggleMyth(this)">
+    <div class="myth-q">
+      <span>NFTs ستطيح في أول لحظات PiDEX ثم ترتفع من بعد</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="myth-a">
+      <span class="status-warn">ملاحظ تاريخياً — ليس قانوناً.</span> هذا السلوك مشاهَد في بدايات أسواق بسيولة منخفضة. لكن كل حالة مختلفة — يعتمد على الطلب الفعلي والـPool الموجود.
+    </div>
+  </div>
+</div>
+
+<div id="tooltip">
+  <div class="ttl" id="tt-title"></div>
+  <div class="ttb" id="tt-body"></div>
+</div>
+
+<footer>
+  <span>مستقل غير رسمي • ماشي نصائح مالية • MIT</span>
+  <span><a href="https://github.com/aybvip/pi-ecosystem-mcap">GitHub</a> · <a href="/pi-ecosystem-mcap/">الرئيسية</a></span>
+</footer>
+
+<script>
+// ========== CANVAS ENGINE ==========
+const canvas = document.getElementById('flow');
+const ctx = canvas.getContext('2d');
+let W, H, nodes, edges, particles = [], animId;
+let currentView = 'economy';
+let hoveredNode = null;
+
+const C = {
+  pi:    '#f7c948',
+  ousd:  '#4ade80',
+  cidi:  '#a78bfa',
+  dex:   '#38bdf8',
+  grey:  '#94a3b8',
+  muted: '#3a4f63',
+  bg:    '#070a0f',
+  panel: '#0d1117',
+  border:'#1e2733',
+};
+
+// ---- VIEWS ----
+const VIEWS = {
+  economy: {
+    nodes: [
+      { id:'pioneer', label:'Pioneer', sub:'مستخدم Pi', x:.5, y:.12, color:C.grey, r:34 },
+      { id:'pi',      label:'π Pi',    sub:'العملة الأساسية', x:.5, y:.38, color:C.pi,   r:42 },
+      { id:'ousd',    label:'OUSD',   sub:'تسوية مستقرة', x:.15, y:.65, color:C.ousd, r:30 },
+      { id:'cidi',    label:'CiDi\nELF', sub:'CiDiCoin · Elf Sigil', x:.5, y:.70, color:C.cidi, r:34 },
+      { id:'pidex',   label:'PiDEX',  sub:'دفتر الأوامر', x:.85, y:.65, color:C.dex,  r:30 },
+    ],
+    edges: [
+      { from:'pioneer', to:'pi',    label:'يشحن / يستيك', color:C.pi },
+      { from:'pi',      to:'cidi',  label:'يشتري CiDiCoin', color:C.cidi },
+      { from:'pi',      to:'ousd',  label:'تحويل مؤقت', color:C.ousd },
+      { from:'pi',      to:'pidex', label:'سيولة', color:C.dex },
+      { from:'cidi',    to:'pidex', label:'Elf Sigil → تداول', color:C.dex },
+      { from:'pidex',   to:'pi',    label:'Rotation → Pi', color:C.pi },
+      { from:'ousd',    to:'pi',    label:'فك التجميد', color:C.pi },
+    ],
+    tips: {
+      pioneer:'Pioneer: مستخدم Pi الذي أكمل KYC. يملك Pi ويستطيع الاستيك في التطبيقات والمشاركة في Launchpad.',
+      pi:'π Pi: العملة الرئيسية للإيكوسستم. كل شيء يمر عبرها. مؤكد رسمياً من بلوق Pi أكتوبر 2026.',
+      ousd:'OUSD: Stablecoin مكمل — للتسوية بقيمة ثابتة. ليس بديلاً للـPi. شراكة رسمية مع Open Standard.',
+      cidi:'CiDi Games / ELF: استثمار رسمي Pi Network Ventures. CiDiCoin يُشحن بالـPi. Elf Sigil أصل قابل للتداول.',
+      pidex:'PiDEX: البورصة اللامركزية الداخلية. قيد التحضير. سيكون المكان الذي تُتداول فيه Elf Sigil وTokens الإيكوسستم.',
+    }
+  },
+  pirc: {
+    nodes: [
+      { id:'app',     label:'تطبيق\nشغال',  sub:'Product-First شرط أساسي', x:.5,  y:.10, color:C.ousd, r:32 },
+      { id:'apply',   label:'طلب\nالإطلاق', sub:'يتقدم للـLaunchpad', x:.5,  y:.30, color:C.grey, r:28 },
+      { id:'stake',   label:'Pioneers\nيستيكوا', sub:'Pi يذهب للـPool', x:.25, y:.52, color:C.pi,   r:32 },
+      { id:'pool',    label:'Pool\nسيولة',  sub:'مبني تلقائياً', x:.75, y:.52, color:C.dex,  r:30 },
+      { id:'token',   label:'Token\nيُطلق', sub:'مع سيولة من اليوم الأول', x:.5,  y:.75, color:C.cidi, r:34 },
+    ],
+    edges: [
+      { from:'app',   to:'apply', label:'يشترط', color:C.ousd },
+      { from:'apply', to:'stake', label:'Pioneers يشاركون', color:C.pi },
+      { from:'stake', to:'pool',  label:'Pi → Pool', color:C.dex },
+      { from:'pool',  to:'token', label:'سيولة أساسية', color:C.cidi },
+      { from:'apply', to:'token', label:'PiRC يُوزّع', color:C.grey },
+    ],
+    tips: {
+      app:'Product-First: الشرط الأساسي في PiRC. لا يمكن إطلاق Token بدون تطبيق شغال فعلاً بمستخدمين حقيقيين.',
+      apply:'طلب الإطلاق: المشروع يتقدم للـPi Launchpad ويُرفق ملف PiRC الخاص به.',
+      stake:'Pioneers يستيكوا Pi: يحجزون Pi للحصول على Token. PiPower يحدد الأولوية حسب مدة الـLockup والنشاط.',
+      pool:'Pool السيولة: كل Pi المجموع يذهب تلقائياً لـPool دائم Token/Pi. يمنع Rug Pull الكلاسيكي.',
+      token:'Token يُطلق: مع Pool سيولة موجود مسبقاً. Spread أضيق من يوم الأول مقارنة بـPump.fun.',
+    }
+  },
+  firstmin: {
+    nodes: [
+      { id:'t0',   label:'T=0',    sub:'الإطلاق', x:.5, y:.10, color:C.piBurn, r:28 },
+      { id:'t5',   label:'T=5s',   sub:'Spread واسع جداً', x:.2, y:.30, color:C.pi,   r:26 },
+      { id:'t30',  label:'T=30s',  sub:'أول تكوّن الـDepth', x:.8, y:.30, color:C.pi,   r:26 },
+      { id:'t2m',  label:'T=2min', sub:'اكتشاف السعر يبدأ', x:.3, y:.58, color:C.ousd, r:28 },
+      { id:'flight',label:'Pi\nأولاً', sub:'Flight to Reference', x:.7, y:.58, color:C.pi, r:30 },
+      { id:'stable',label:'استقرار\nأولي', sub:'Rotation يبدأ', x:.5, y:.82, color:C.dex, r:30 },
+    ],
+    edges: [
+      { from:'t0',    to:'t5',    label:'', color:C.piBurn },
+      { from:'t0',    to:'t30',   label:'', color:C.piBurn },
+      { from:'t5',    to:'t2m',   label:'ضغط بيع', color:C.muted },
+      { from:'t30',   to:'flight',label:'Pi كمرجع', color:C.pi },
+      { from:'t2m',   to:'stable',label:'', color:C.ousd },
+      { from:'flight',to:'stable',label:'', color:C.dex },
+    ],
+    tips: {
+      t0:'T=0 — لحظة الإطلاق: Order Book شبه فارغ. Spread ضخم. أول صفقة تُحدد "السعر الأول".',
+      t5:'T=5s: أول موجة بيع تدخل. الباعة يريدون Pi. المشترون ينتظرون ويشاهدون.',
+      t30:'T=30s: أول Depth يتشكل على الجانبين. AMM يبدأ يمتص الصفقات.',
+      t2m:'T=2min: اكتشاف السعر يبدأ فعلاً. Spread يضيق. الـArbitrageurs يدخلون.',
+      flight:'Flight to Pi: الناس يهربون للـReference — Pi لأنه الأعمق والأكثر سيولة داخلياً.',
+      stable:'استقرار أولي: سعر "مبدئي" يتثبت. Rotation يبدأ نحو AI tokens أو NFTs أخرى.',
+    }
+  }
+};
+
+// ========== PARTICLE SYSTEM ==========
+class Particle {
+  constructor(edge, nds) {
+    this.edge = edge;
+    const s = nds.find(n=>n.id===edge.from);
+    const e = nds.find(n=>n.id===edge.to);
+    this.sx = s.px; this.sy = s.py;
+    this.ex = e.px; this.ey = e.py;
+    this.t = Math.random();
+    this.speed = 0.003 + Math.random() * 0.004;
+    this.color = edge.color;
+    this.size = 3 + Math.random() * 2;
+  }
+  update() { this.t += this.speed; return this.t < 1 }
+  draw() {
+    const t = this.easeInOut(this.t);
+    const x = this.sx + (this.ex - this.sx) * t;
+    const y = this.sy + (this.ey - this.sy) * t;
+    ctx.beginPath();
+    ctx.arc(x, y, this.size, 0, Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = (1 - Math.abs(this.t - .5) * 1.5) * .9;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  easeInOut(t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t }
+}
+
+function spawnParticles(nds, eds) {
+  if (Math.random() < .15) {
+    const e = eds[Math.floor(Math.random()*eds.length)];
+    particles.push(new Particle(e, nds));
+  }
+  particles = particles.filter(p => p.update());
+}
+
+// ========== DRAW ==========
+function resize() {
+  const wrap = canvas.parentElement;
+  const dpr = window.devicePixelRatio || 1;
+  W = wrap.clientWidth;
+  H = Math.round(W * .48);
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+  layoutNodes();
+}
+
+function layoutNodes() {
+  const v = VIEWS[currentView];
+  nodes = v.nodes.map(n => ({ ...n, px: n.x * W, py: n.y * H }));
+  edges = v.edges;
+}
+
+function drawArrow(x1,y1,x2,y2,color,r1,r2) {
+  const dx = x2-x1, dy = y2-y1;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const ux = dx/len, uy = dy/len;
+  const sx = x1+ux*r1, sy = y1+uy*r1;
+  const ex = x2-ux*(r2+8), ey = y2-uy*(r2+8);
+
+  ctx.beginPath();
+  ctx.moveTo(sx,sy);
+  ctx.lineTo(ex,ey);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.globalAlpha = .35;
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // arrowhead
+  const ang = Math.atan2(ey-sy,ex-sx);
+  ctx.beginPath();
+  ctx.moveTo(ex,ey);
+  ctx.lineTo(ex-8*Math.cos(ang-0.4), ey-8*Math.sin(ang-0.4));
+  ctx.lineTo(ex-8*Math.cos(ang+0.4), ey-8*Math.sin(ang+0.4));
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.globalAlpha = .5;
+  ctx.fill();
+  ctx.globalAlpha = 1;
+}
+
+function drawNode(n, t) {
+  const pulse = Math.sin(t * 2 + n.px) * 3;
+  const isHov = hoveredNode && hoveredNode.id === n.id;
+  const r = n.r + (isHov ? 5 : 0);
+
+  // glow
+  const grd = ctx.createRadialGradient(n.px,n.py,r*.3,n.px,n.py,r*2.2);
+  grd.addColorStop(0, n.color + '33');
+  grd.addColorStop(1, 'transparent');
+  ctx.beginPath(); ctx.arc(n.px,n.py,r*2.2+pulse,0,Math.PI*2);
+  ctx.fillStyle = grd; ctx.fill();
+
+  // circle
+  ctx.beginPath(); ctx.arc(n.px,n.py,r+pulse*.3,0,Math.PI*2);
+  ctx.fillStyle = '#0d1117';
+  ctx.strokeStyle = n.color + (isHov ? 'ff' : '99');
+  ctx.lineWidth = isHov ? 2.5 : 1.5;
+  ctx.fill(); ctx.stroke();
+
+  // label
+  ctx.fillStyle = n.color;
+  ctx.textAlign = 'center';
+  const lines = n.label.split('\n');
+  const fs = Math.min(r * .38, 15);
+  ctx.font = `600 ${fs}px system-ui`;
+  const lh = fs * 1.3;
+  const startY = n.py - (lines.length-1)*lh/2;
+  lines.forEach((l,i) => ctx.fillText(l, n.px, startY + i*lh + fs*.35));
+
+  // sub
+  if (r > 28) {
+    ctx.fillStyle = '#6b7f94';
+    ctx.font = `${Math.min(r*.24,11)}px system-ui`;
+    ctx.fillText(n.sub, n.px, n.py + r * .62);
+  }
+}
+
+let frame = 0;
+function render() {
+  animId = requestAnimationFrame(render);
+  frame += .012;
+  ctx.clearRect(0,0,W,H);
+
+  // bg grid
+  ctx.strokeStyle = '#1e273318'; ctx.lineWidth = 1;
+  for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+
+  // edges
+  edges.forEach(e => {
+    const s = nodes.find(n=>n.id===e.from);
+    const t = nodes.find(n=>n.id===e.to);
+    if(s&&t) drawArrow(s.px,s.py,t.px,t.py,e.color,s.r,t.r);
+  });
+
+  // particles
+  spawnParticles(nodes, edges);
+  particles.forEach(p => p.draw());
+
+  // nodes
+  nodes.forEach(n => drawNode(n, frame));
+}
+
+// ========== INTERACTION ==========
+function getHovered(mx, my) {
+  return nodes.find(n => {
+    const dx = mx - n.px, dy = my - n.py;
+    return Math.sqrt(dx*dx+dy*dy) < n.r + 10;
+  }) || null;
+}
+
+function showTip(node, cx, cy) {
+  const tip = document.getElementById('tooltip');
+  const tips = VIEWS[currentView].tips;
+  document.getElementById('tt-title').textContent = node.label.replace('\n',' ');
+  document.getElementById('tt-body').textContent = tips[node.id] || '';
+  tip.style.opacity = '1';
+  tip.style.left = (cx+16)+'px';
+  tip.style.top = (cy-20)+'px';
+}
+
+function hideTip() {
+  document.getElementById('tooltip').style.opacity = '0';
+}
+
+canvas.addEventListener('mousemove', e => {
+  const r = canvas.getBoundingClientRect();
+  const sx = canvas.width / canvas.clientWidth;
+  const mx = (e.clientX - r.left);
+  const my = (e.clientY - r.top);
+  hoveredNode = getHovered(mx, my);
+  canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
+  if(hoveredNode) showTip(hoveredNode, e.clientX, e.clientY);
+  else hideTip();
+});
+
+canvas.addEventListener('mouseleave', () => { hoveredNode = null; hideTip(); });
+
+canvas.addEventListener('click', e => {
+  if(!hoveredNode) return;
+  const tips = VIEWS[currentView].tips;
+  if(tips[hoveredNode.id]) {
+    alert(`${hoveredNode.label.replace('\n',' ')}\n\n${tips[hoveredNode.id]}`);
+  }
+});
+
+// ========== VIEW SWITCH ==========
+function setView(v) {
+  currentView = v;
+  particles = [];
+  layoutNodes();
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', ['economy','pirc','firstmin'][i] === v);
+  });
+}
+
+// ========== LIVE DATA ==========
+async function loadLive() {
+  try {
+    const r = await fetch('https://api.mainnet.minepi.com/');
+    if(!r.ok) throw new Error();
+    const d = await r.json();
+    if(d.core_latest_ledger) {
+      document.getElementById('lc-ledger').textContent = Number(d.core_latest_ledger).toLocaleString();
+      document.getElementById('lc-time').textContent = 'Pi Mainnet Horizon';
+    }
+  } catch{}
+  try {
+    const r2 = await fetch('https://api.mainnet.minepi.com/transactions?limit=1&order=desc');
+    if(!r2.ok) throw new Error();
+    const d2 = await r2.json();
+    const rec = d2._embedded?.records?.[0];
+    if(rec) {
+      document.getElementById('lc-txns').textContent = rec.ledger;
+      document.getElementById('lc-ledger').textContent = rec.ledger.toLocaleString();
+    }
+  } catch{}
+}
+
+// ========== MYTH BUSTER ==========
+function toggleMyth(el) { el.classList.toggle('open') }
+
+// ========== INIT ==========
+window.addEventListener('resize', () => { resize(); layoutNodes(); });
+resize();
+render();
+loadLive();
+</script>
+</body>
+</html>

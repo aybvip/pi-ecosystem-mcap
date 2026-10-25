@@ -21,6 +21,8 @@ function test() {
     "docs/LIQUIDITY.md",
     "docs/FIRST_MINUTES.md",
     "docs/CASE_CIDI.md",
+    "docs/LAUNCHPAD_PIRC.md",
+    "docs/ECOSYSTEM_COMPARE.md",
     "DISCLAIMER.md",
     "SECURITY.md",
     "LICENSE",

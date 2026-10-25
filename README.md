@@ -47,6 +47,8 @@
 | [`docs/LIQUIDITY.md`](docs/LIQUIDITY.md) | AMM، دفتر الأوامر، Spread، Depth — شرح مبسط |
 | [`docs/FIRST_MINUTES.md`](docs/FIRST_MINUTES.md) | ما يصير فعلياً فأول 60 ثانية عند إطلاق أصل |
 | [`docs/CASE_CIDI.md`](docs/CASE_CIDI.md) | **دراسة حالة حية: CiDi Games / ELF** — مثال فعلي داخل الإيكوسستم |
+| [`docs/LAUNCHPAD_PIRC.md`](docs/LAUNCHPAD_PIRC.md) | Pi Launchpad وPiRC Token Standard — مبدأ Product-First وبناء السيولة |
+| [`docs/ECOSYSTEM_COMPARE.md`](docs/ECOSYSTEM_COMPARE.md) | مقارنة اقتصاد Pi مع BNB Chain وSolana — الفلسفة والـTokenomics |
 | [`docs/SPECULATION.md`](docs/SPECULATION.md) | **فصل واضح** بين الواقعي والتخمين |
 | [`docs/SOURCES.md`](docs/SOURCES.md) | كل المصادر الرسمية مع الروابط |
 
